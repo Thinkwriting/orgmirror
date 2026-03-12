@@ -361,15 +361,23 @@ cd orgmirror
 pip install -e .
 ```
 
-需要 Anthropic API Key：
+支持三种 LLM 后端，选一个就行：
+
 ```bash
+# 方式一：Anthropic API（默认）
 export ANTHROPIC_API_KEY=your-api-key-here
+
+# 方式二：OpenAI 兼容（GPT / Codex / Cursor / 任何兼容 API）
+export OPENAI_API_KEY=your-api-key-here
+
+# 方式三：Claude Code（本地装了 claude CLI 就行，不需要 API key）
+# 什么都不用配
 ```
 
 ### 用法
 
 ```bash
-# 字节模式跑一个任务
+# 字节模式跑一个任务（默认 Anthropic 后端）
 orgmirror "写一个Python快速排序" -m bytedance
 
 # 阿里模式（看传话筒有多少）
@@ -382,6 +390,22 @@ orgmirror "做一个竞品分析报告" --compare
 orgmirror "写一个排序函数" -m bytedance alibaba --compare
 ```
 
+### 切换 LLM 后端
+
+```bash
+# 用 OpenAI GPT-4o
+orgmirror "写一个快速排序" -m bytedance --backend openai --model gpt-4o
+
+# 用 Cursor/Codex 等 OpenAI 兼容代理
+orgmirror "写一个快速排序" --backend openai --base-url http://localhost:8080/v1
+
+# 用 Claude Code（本地 CLI，不花 API 钱）
+orgmirror "写一个快速排序" --backend claude-code
+
+# 指定 API key（优先级高于环境变量）
+orgmirror "写一个快速排序" --backend anthropic --api-key sk-ant-xxx
+```
+
 ### Python API
 
 ```python
@@ -389,7 +413,14 @@ import asyncio
 from orgmirror.cli import build_orchestrator
 
 async def main():
+    # 默认 Anthropic 后端
     orch = build_orchestrator()
+
+    # 或者指定 OpenAI 后端
+    orch = build_orchestrator(backend_type="openai", api_key="sk-xxx")
+
+    # 或者 Claude Code 本地模式
+    orch = build_orchestrator(backend_type="claude-code")
 
     # 单架构跑一次
     metrics = await orch.run_single("bytedance", "写一个快速排序")

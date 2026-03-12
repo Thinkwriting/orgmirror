@@ -1,7 +1,7 @@
 [project]
 name = "orgmirror"
 version = "0.1.0"
-description = "大厂效率审计 — AI Multi-Agent 组织效率照妖镜"
+description = "重生之我在大厂当高管 — AI Multi-Agent 组织效率照妖镜"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -10,6 +10,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+openai = [
+    "openai>=1.0.0",
+]
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.24",
