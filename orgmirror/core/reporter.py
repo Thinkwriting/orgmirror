@@ -63,8 +63,7 @@ def _print_contribution_ranking(task: TaskMetrics):
     """Agent 贡献排行榜"""
     table = Table(title="📊 Agent 贡献排行榜", show_header=True, header_style="bold")
     table.add_column("排名", style="dim", width=4)
-    table.add_column("Agent", width=20)
-    table.add_column("角色", width=12)
+    table.add_column("角色", width=16)
     table.add_column("层级", width=8)
     table.add_column("Token", justify="right", width=8)
     table.add_column("信息增量", justify="right", width=8)
@@ -83,7 +82,6 @@ def _print_contribution_ranking(task: TaskMetrics):
         emoji, color, label = CONTRIB_STYLE[m.contribution_type]
         table.add_row(
             str(i),
-            m.agent_id,
             m.agent_role,
             LEVEL_LABEL.get(m.agent_level, str(m.agent_level)),
             str(m.total_tokens),
@@ -124,7 +122,7 @@ def _print_passthrough_detection(task: TaskMetrics):
     lines = []
     for m in passthroughs:
         lines.append(
-            f"[red]⚠️  {m.agent_id}[/red] ({m.agent_role}) — "
+            f"[red]⚠️  {m.agent_role}[/red] — "
             f"信息增量仅 {m.info_delta:.1%}，消耗 {m.total_tokens} tokens"
         )
     console.print(Panel(
@@ -144,7 +142,7 @@ def _print_what_if_cut(task: TaskMetrics):
 
     lines = []
     for m in sorted(skippable, key=lambda x: x.skip_score, reverse=True):
-        lines.append(f"  砍掉 [{m.agent_id}] → 节省 {m.total_tokens} tokens（可跳过性 {m.skip_score:.0%}）")
+        lines.append(f"  砍掉 [{m.agent_role}] → 节省 {m.total_tokens} tokens（可跳过性 {m.skip_score:.0%}）")
 
     console.print(Panel(
         "\n".join(lines) + f"\n\n[bold]💰 合计可节省: {saved_tokens:,} tokens ({saved_pct:.1%})[/bold]",

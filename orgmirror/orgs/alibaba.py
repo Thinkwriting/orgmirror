@@ -43,7 +43,7 @@ class AlibabaOrg(OrgBase):
                 "3. 将任务授权给VP执行\n"
                 "你的输出应该是高层战略视角的指导。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         a["vp"] = ManagerAgent(
@@ -57,7 +57,7 @@ class AlibabaOrg(OrgBase):
                 "3. 将任务传递给中台调度\n"
                 "经典口头禅：'方向对了，继续。'"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         # === 中台层 ===
@@ -70,7 +70,7 @@ class AlibabaOrg(OrgBase):
                 "2. 协调各中台提供服务\n"
                 "3. 将中台能力打包后交给前台业务团队"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         for name, desc in [
@@ -82,7 +82,7 @@ class AlibabaOrg(OrgBase):
                 agent_id=name,
                 role=desc.split("：")[0],
                 system_prompt=f"你是阿里巴巴的{desc}。根据需求提供你的专业能力支撑。",
-                collector=collector, model=self.model,
+                collector=collector, model=self.model, backend=self.backend,
             )
             # 中台是基础设施层
             a[name].level = AgentLevel.INFRA
@@ -99,7 +99,7 @@ class AlibabaOrg(OrgBase):
                 "3. 给出文化层面的建议\n"
                 "你不负责具体业务执行。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         # === 前台业务 ===
@@ -113,7 +113,7 @@ class AlibabaOrg(OrgBase):
                 agent_id=role_id,
                 role=role_name,
                 system_prompt=prompt,
-                collector=collector, model=self.model,
+                collector=collector, model=self.model, backend=self.backend,
             )
 
         # === 中层管理 ===
@@ -128,7 +128,7 @@ class AlibabaOrg(OrgBase):
                 "3. 整理成汇报材料提交给总监\n"
                 "你不参与具体执行。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         a["director"] = ManagerAgent(
@@ -142,7 +142,7 @@ class AlibabaOrg(OrgBase):
                 "3. 将材料转发给VP\n"
                 "你的核心价值是'审批通过'。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         return a

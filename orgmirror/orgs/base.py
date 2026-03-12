@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import uuid
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from ..agents.base_agent import BaseAgent
 from ..core.analyzer import ContributionAnalyzer
+from ..core.llm_backend import LLMBackend
 from ..core.metrics import MetricsCollector, TaskMetrics
 from ..core.reporter import print_report
 
@@ -17,8 +19,9 @@ class OrgBase(ABC):
     org_mode: str = ""  # alibaba / tencent / bytedance
     org_name: str = ""
 
-    def __init__(self, model: str = "claude-sonnet-4-20250514"):
+    def __init__(self, model: str = "claude-sonnet-4-20250514", backend: Optional[LLMBackend] = None):
         self.model = model
+        self.backend = backend
         self.agents: dict[str, BaseAgent] = {}
         self.collector: MetricsCollector | None = None
 

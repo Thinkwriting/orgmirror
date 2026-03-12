@@ -45,7 +45,7 @@ class TencentOrg(OrgBase):
                 "3. 将任务同时下发给两个BG赛马\n"
                 "经典风格：充分讨论、温和表态、不明确站队。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         # === BG-A 团队 ===
@@ -54,19 +54,19 @@ class TencentOrg(OrgBase):
             role="BG-A负责人",
             level=AgentLevel.MIDDLE,
             system_prompt="你是腾讯BG-A的负责人。带领团队完成任务，拿出最好的方案证明你的BG更强。",
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
         a["bg_a_dev"] = ExecutorAgent(
             agent_id="bg_a_dev",
             role="BG-A开发",
             system_prompt="你是腾讯BG-A的开发。根据负责人的指示，产出高质量的实现。竭尽全力，这是赛马！",
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
         a["bg_a_pm"] = ExecutorAgent(
             agent_id="bg_a_pm",
             role="BG-A产品",
             system_prompt="你是腾讯BG-A的产品经理。做需求分析和方案设计，帮团队赢得赛马。",
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         # === BG-B 团队（赛马对手）===
@@ -75,19 +75,19 @@ class TencentOrg(OrgBase):
             role="BG-B负责人",
             level=AgentLevel.MIDDLE,
             system_prompt="你是腾讯BG-B的负责人。你的团队也在做同样的任务，你必须比BG-A做得更好。",
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
         a["bg_b_dev"] = ExecutorAgent(
             agent_id="bg_b_dev",
             role="BG-B开发",
             system_prompt="你是腾讯BG-B的开发。产出最好的实现，赛过BG-A。",
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
         a["bg_b_pm"] = ExecutorAgent(
             agent_id="bg_b_pm",
             role="BG-B产品",
             system_prompt="你是腾讯BG-B的产品经理。拿出比BG-A更有创意的方案。",
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         # === TEG 技术底座 ===
@@ -98,7 +98,7 @@ class TencentOrg(OrgBase):
                 "你是腾讯TEG。你的职责是提供基础技术��力（云服务、AI能力、数据处理）。\n"
                 "你同时服务BG-A和BG-B，不参与赛马，只提供工具。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
         a["teg"].level = AgentLevel.INFRA
 
@@ -114,7 +114,7 @@ class TencentOrg(OrgBase):
                 "3. 说明选择理由\n"
                 "公正评审，用数据说话。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         # === CDG 投资判断 ===
@@ -129,7 +129,7 @@ class TencentOrg(OrgBase):
                 "3. 提供市场视角的补充\n"
                 "你评估但不执行。"
             ),
-            collector=collector, model=self.model,
+            collector=collector, model=self.model, backend=self.backend,
         )
 
         return a

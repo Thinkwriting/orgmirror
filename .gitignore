@@ -4,5 +4,17 @@ __pycache__/
 dist/
 build/
 .pytest_cache/
-.env
 *.egg
+
+# Sensitive files
+.env
+.env.*
+.env.local
+*.key
+*.pem
+*.p12
+*.pfx
+credentials.*
+secrets.*
+*_secret.json
+service-account*.json

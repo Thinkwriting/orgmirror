@@ -1,5 +1,10 @@
 """ExecutorAgent — 执行型Agent，实际产出内容"""
 
+from __future__ import annotations
+
+from typing import Optional
+
+from ..core.llm_backend import LLMBackend
 from ..core.metrics import AgentLevel, MetricsCollector
 from .base_agent import BaseAgent
 
@@ -14,6 +19,7 @@ class ExecutorAgent(BaseAgent):
         system_prompt: str,
         collector: MetricsCollector | None = None,
         model: str = "claude-sonnet-4-20250514",
+        backend: Optional[LLMBackend] = None,
     ):
         super().__init__(
             agent_id=agent_id,
@@ -22,4 +28,5 @@ class ExecutorAgent(BaseAgent):
             system_prompt=system_prompt,
             model=model,
             collector=collector,
+            backend=backend,
         )

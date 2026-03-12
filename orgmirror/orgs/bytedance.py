@@ -44,6 +44,7 @@ class ByteDanceOrg(OrgBase):
             ),
             collector=collector,
             model=self.model,
+            backend=self.backend,
         )
 
         # 3个执行Agent — 并行执行子任务
@@ -58,6 +59,7 @@ class ByteDanceOrg(OrgBase):
                 ),
                 collector=collector,
                 model=self.model,
+                backend=self.backend,
             )
 
         # 数据验证Agent — AB测试思维
@@ -75,6 +77,7 @@ class ByteDanceOrg(OrgBase):
             ),
             collector=collector,
             model=self.model,
+            backend=self.backend,
         )
 
         # UG增长Agent — 优化输出的传播性
@@ -88,6 +91,7 @@ class ByteDanceOrg(OrgBase):
             ),
             collector=collector,
             model=self.model,
+            backend=self.backend,
         )
 
         return agents

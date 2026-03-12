@@ -6,8 +6,7 @@ import asyncio
 from abc import ABC, abstractmethod
 from typing import Optional
 
-import anthropic
-
+from ..core.llm_backend import LLMBackend, AnthropicBackend
 from ..core.metrics import AgentLevel, AgentMetrics, MetricsCollector
 
 
@@ -22,6 +21,7 @@ class BaseAgent(ABC):
         system_prompt: str,
         model: str = "claude-sonnet-4-20250514",
         collector: Optional[MetricsCollector] = None,
+        backend: Optional[LLMBackend] = None,
     ):
         self.agent_id = agent_id
         self.role = role
@@ -29,15 +29,16 @@ class BaseAgent(ABC):
         self.system_prompt = system_prompt
         self.model = model
         self.collector = collector
-        self._client: Optional[anthropic.AsyncAnthropic] = None
+        self._backend = backend
         self.upstream: Optional[str] = None
         self.downstream_ids: list[str] = []
 
     @property
-    def client(self) -> anthropic.AsyncAnthropic:
-        if self._client is None:
-            self._client = anthropic.AsyncAnthropic()
-        return self._client
+    def backend(self) -> LLMBackend:
+        """懒初始化：未注入 backend 时默认用 AnthropicBackend（向后兼容）"""
+        if self._backend is None:
+            self._backend = AnthropicBackend()
+        return self._backend
 
     async def run(self, input_text: str) -> str:
         """执行Agent，自动采集metrics"""
@@ -58,20 +59,18 @@ class BaseAgent(ABC):
 
     async def _call_llm(self, input_text: str, metrics: Optional[AgentMetrics] = None) -> str:
         """调用 LLM 并提取 token 使用信息"""
-        response = await self.client.messages.create(
+        response = await self.backend.chat(
+            system=self.system_prompt,
+            user_message=input_text,
             model=self.model,
             max_tokens=2048,
-            system=self.system_prompt,
-            messages=[{"role": "user", "content": input_text}],
         )
 
-        output = response.content[0].text if response.content else ""
-
         if metrics:
-            metrics.input_tokens = response.usage.input_tokens
-            metrics.output_tokens = response.usage.output_tokens
+            metrics.input_tokens = response.input_tokens
+            metrics.output_tokens = response.output_tokens
 
-        return output
+        return response.text
 
     def connect_downstream(self, *agents: BaseAgent):
         """建立下游连接关系"""
