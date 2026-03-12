@@ -1,0 +1,19 @@
+[project]
+name = "orgmirror"
+version = "0.1.0"
+description = "大厂效率审计 — AI Multi-Agent 组织效率照妖镜"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40.0",
+    "rich>=13.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]
+
+[project.scripts]
+orgmirror = "orgmirror.cli:main"
