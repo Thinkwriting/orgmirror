@@ -42,7 +42,7 @@ def print_report(task: TaskMetrics):
         f"[bold]🏢 架构[/bold]: {ORG_LABEL.get(task.org_mode, task.org_mode)}\n"
         f"[bold]🎫 总Token[/bold]: {task.total_tokens:,}\n"
         f"[bold]⏱️  总耗时[/bold]: {task.total_wall_time_ms:,}ms",
-        title="[bold cyan]🔍 效率审计报告 — OrgMirror[/bold cyan]",
+        title="[bold cyan]🔍 重生之我在大厂当高管 — 效率审计报告[/bold cyan]",
         border_style="cyan",
     ))
 
