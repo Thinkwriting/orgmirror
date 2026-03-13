@@ -53,9 +53,10 @@ class ByteDanceOrg(OrgBase):
                 agent_id=f"exec_{label}",
                 role=f"执行者{label}",
                 system_prompt=(
-                    f"你是字节跳动的执行者{label}。直接产出高质量内容，不需要请示。\n"
+                    f"你是字节跳动的执行者{label}。你有完全的决策权和执行权，不需要请示任何人。\n"
                     "你的工作是完成分配给你的子任务，产出具体的代码、文档或分析。\n"
-                    "追求效率和质量。不要写废话，直接给结果。"
+                    "追求效率和质量。不要写废话，直接给结果。\n"
+                    "字节风格：高人才密度下的自我管理，你是Owner而非执行者。"
                 ),
                 collector=collector,
                 model=self.model,
