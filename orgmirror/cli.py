@@ -9,6 +9,7 @@ from .core.llm_backend import create_backend
 from .core.orchestrator import Orchestrator
 from .orgs.alibaba import AlibabaOrg
 from .orgs.bytedance import ByteDanceOrg
+from .orgs.huawei import HuaweiOrg
 from .orgs.tencent import TencentOrg
 
 
@@ -27,6 +28,7 @@ def build_orchestrator(
     orch.register(ByteDanceOrg)
     orch.register(AlibabaOrg)
     orch.register(TencentOrg)
+    orch.register(HuaweiOrg)
     return orch
 
 
@@ -52,7 +54,7 @@ def main():
     parser.add_argument("task", help="要执行的任务描述")
     parser.add_argument(
         "-m", "--modes", nargs="+",
-        choices=["bytedance", "alibaba", "tencent"],
+        choices=["bytedance", "alibaba", "tencent", "huawei"],
         help="组织模式（可多选）",
     )
     parser.add_argument(
