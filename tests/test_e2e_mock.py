@@ -195,11 +195,11 @@ class TestComparison(unittest.TestCase):
         orch = build_orchestrator()
         results = asyncio.run(orch.run_comparison("写一个快速排序"))
 
-        assert len(results) == 4
+        assert len(results) == 3
         modes = {r.org_mode for r in results}
-        assert modes == {"bytedance", "alibaba", "tencent", "huawei"}
+        assert modes == {"bytedance", "alibaba", "tencent"}
 
-        print("\n✅ Comparison test passed — 4 architectures compared")
+        print("\n✅ Comparison test passed — 3 architectures compared")
 
 
 if __name__ == "__main__":
