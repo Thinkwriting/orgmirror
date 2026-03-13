@@ -40,10 +40,11 @@ class TencentOrg(OrgBase):
             level=AgentLevel.EXECUTIVE,
             system_prompt=(
                 "你是腾讯总办。你的职责是：\n"
-                "1. 讨论任务的战略价值\n"
-                "2. 形成共识但不做具体决策\n"
+                "1. 讨论任务的战略价值，明确核心约束和质量标准\n"
+                "2. 形成框架共识（BG必须在此框架内竞争）\n"
                 "3. 将任务同时下发给两个BG赛马\n"
-                "经典风格：充分讨论、温和表态、不明确站队。"
+                "经典风格：充分讨论、温和表态、不明确站队，但框架约束是硬性的。\n"
+                "《大厂人才》实证：简化考核反而导致管理者权力膨胀，总办共识常流于形式。"
             ),
             collector=collector, model=self.model, backend=self.backend,
         )
